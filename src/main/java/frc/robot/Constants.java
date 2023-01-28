@@ -17,7 +17,7 @@ public final class Constants {
     public static final boolean competitionMode = false;
 
     // Joystick axis deadband for the swerve drive
-    public static final double swerveDeadband = 0.1;
+    public static final double swerveDeadband = 0.15;
 
     // Value to voltage compensate the motors for on the swerve drive
     public static final double voltageCompSwerve = 12.0;
@@ -62,7 +62,7 @@ public final class Constants {
     public static final int driveContinuousCurrentLimit = 80;
 
     /* Angle Motor PID Values */
-    public static final double angleKP = 0.01;
+    public static final double angleKP = 0.0075;
     public static final double angleKI = 0.0;
     public static final double angleKD = 0.1;
     public static final double angleKFF = 0.0;
