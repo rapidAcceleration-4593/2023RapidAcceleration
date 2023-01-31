@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.auton.Autos;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.vision;
 
 public class RobotContainer {
   // Auton Chooser
@@ -16,6 +17,7 @@ public class RobotContainer {
 
   // Robot subsystems
   private Swerve m_swerve = new Swerve();
+  private vision m_Vision = new vision();
 
   // Xbox controllers
   private final CommandXboxController driver =
@@ -37,6 +39,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     driver.x().onTrue(new InstantCommand(() -> m_swerve.zeroGyro()));
+    driver.y().toggleOnTrue(new InstantCommand(() -> m_Vision.horizontalOffset()));
   }
 
   /** Used for joystick/xbox axis actions. */
