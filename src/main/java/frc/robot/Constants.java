@@ -32,6 +32,16 @@ public final class Constants {
     public static final int xboxController2Port = 1;
   }
 
+  public static final class ArmConstants {
+    
+    public static final double baseRotateSpeed = .25;
+    public static final double armRotateSpeed = .1;
+    public static final double armExtensionSpeed = .5;
+    public static final double smallAngle = 30;
+    public static final double largeAngle = 160;
+
+  }
+
   /** Constants revolving around the swerve subsystem */
   public static final class SwerveConstants {
     /* Gyro Constants */

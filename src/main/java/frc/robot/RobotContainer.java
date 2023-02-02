@@ -4,11 +4,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.auton.Autos;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.armCommands;
+import frc.robot.commands.armStop;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.arm;;
 
 public class RobotContainer {
   // Auton Chooser
@@ -16,11 +20,11 @@ public class RobotContainer {
 
   // Robot subsystems
   private Swerve m_swerve = new Swerve();
+  private arm m_arm = new arm();
 
   // Xbox controllers
-  private final CommandXboxController driver =
+  public static final CommandXboxController driver =
       new CommandXboxController(Constants.OperatorConstants.xboxController1Port);
-
   // Drive Controls
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -37,6 +41,9 @@ public class RobotContainer {
 
     /* Driver Buttons */
     driver.x().onTrue(new InstantCommand(() -> m_swerve.zeroGyro()));
+    driver.a().onTrue(new armCommands(m_arm));
+    driver.a().onFalse(new armStop(m_arm));
+    
   }
 
   /** Used for joystick/xbox axis actions. */
