@@ -34,9 +34,9 @@ public final class Constants {
 
   public static final class ArmConstants {
     
-    public static final double baseRotateSpeed = .25;
-    public static final double armRotateSpeed = .1;
-    public static final double armExtensionSpeed = .5;
+    public static final double baseRotateSpeed = .5;
+    public static final double armRotateSpeed = .4;
+    public static final double armExtensionSpeed = 1;
     public static final double smallAngle = 30;
     public static final double largeAngle = 160;
 

@@ -12,7 +12,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.armCommands;
+import frc.robot.commands.armCommands.armUp;
 
 public class arm extends SubsystemBase {
 
@@ -26,8 +26,8 @@ public class arm extends SubsystemBase {
 
   
     public arm() {
-      //m_basePotentiometer = new AnalogPotentiometer(null, 0, 0);
-      //m_armPotentiometer = new AnalogPotentiometer(null, 0, 0);
+      m_basePotentiometer = new AnalogPotentiometer(1, 180, 0);
+      m_armPotentiometer = new AnalogPotentiometer(2, 180, 0);
       m_baseMotor = new PWM(1);
       m_armRotaionMotor = new PWM(2);
       m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
@@ -38,12 +38,18 @@ public class arm extends SubsystemBase {
     }
     public void baseRotateRight (){
       m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+      
+      System.out.println("Base Potentiometer" + m_basePotentiometer.get());
     }
     public void armRotateUp () {
       m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
+
+      System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
     public void armRotateDown () {
       m_armRotaionMotor.setSpeed(-Constants.ArmConstants.armRotateSpeed);
+
+      System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
     public void extesionOut() {
       m_extensionMotor.set(Constants.ArmConstants.armExtensionSpeed);
@@ -55,5 +61,10 @@ public class arm extends SubsystemBase {
       m_armRotaionMotor.setSpeed(0);
       m_baseMotor.setSpeed(0);
       m_extensionMotor.set(0);
+    }
+    public void periodic(){
+
+      System.out.println("Base Potentiometer" + m_basePotentiometer.get());
+
     }
   }

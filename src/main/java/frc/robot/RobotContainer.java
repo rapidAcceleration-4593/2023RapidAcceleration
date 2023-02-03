@@ -9,10 +9,15 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.auton.Autos;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.armCommands;
-import frc.robot.commands.armStop;
+import frc.robot.commands.armCommands.armBaseRotateLeft;
+import frc.robot.commands.armCommands.armBaseRotateRight;
+import frc.robot.commands.armCommands.armDown;
+import frc.robot.commands.armCommands.armExtensionIn;
+import frc.robot.commands.armCommands.armExtensionOut;
+import frc.robot.commands.armCommands.armStop;
+import frc.robot.commands.armCommands.armUp;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.arm;;
+import frc.robot.subsystems.arm;
 
 public class RobotContainer {
   // Auton Chooser
@@ -41,9 +46,25 @@ public class RobotContainer {
 
     /* Driver Buttons */
     driver.x().onTrue(new InstantCommand(() -> m_swerve.zeroGyro()));
-    driver.a().onTrue(new armCommands(m_arm));
+    
+    driver.a().onTrue(new armUp(m_arm));
     driver.a().onFalse(new armStop(m_arm));
     
+    driver.b().onTrue(new armDown(m_arm));
+    driver.b().onFalse(new armStop(m_arm));
+    
+    driver.leftBumper().onTrue(new armBaseRotateLeft(m_arm));
+    driver.leftBumper().onFalse(new armStop(m_arm));
+
+    driver.rightBumper().onTrue(new armBaseRotateRight(m_arm));
+    driver.rightBumper().onFalse(new armStop(m_arm));
+
+    driver.start().onTrue(new armExtensionOut(m_arm));
+    driver.start().onFalse(new armStop(m_arm));
+
+    driver.back().onTrue(new armExtensionIn(m_arm));
+    driver.back().onFalse(new armStop(m_arm));
+
   }
 
   /** Used for joystick/xbox axis actions. */

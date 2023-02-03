@@ -1,21 +1,21 @@
-package frc.robot.commands;
+package frc.robot.commands.armCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm;
 
-public class armCommands extends CommandBase{
+public class armStop extends CommandBase{
 
     private final arm m_arm;
 
-    public armCommands(arm armPassedIn) {
+    public armStop(arm armPassedIn) {
         m_arm = armPassedIn;
         addRequirements(armPassedIn);
     }
 
     @Override
     public void initialize() {
-        m_arm.armRotateUp();
+        m_arm.stopArm();
     }
     
 }
