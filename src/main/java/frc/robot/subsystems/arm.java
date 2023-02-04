@@ -69,23 +69,65 @@ public class arm extends SubsystemBase {
       if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
 
         m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
+        //System.out.println("less than set point " + m_armPotentiometer.get());
+
 
       }
       else if (m_armPotentiometer.get() > Constants.ArmConstants.largeAngle){
         
         m_armRotaionMotor.setSpeed(-Constants.ArmConstants.armRotateSpeed);
-      
+        //System.out.println("more that set point " + m_armPotentiometer.get());
       }
       else {
-        m_armRotaionMotor.setSpeed(0);
+        m_armRotaionMotor.setSpeed(.1);
+       // System.out.println("at set point" + m_armPotentiometer.get());
+
       }
 
+    }
+    public void movePointLeft(){
+      if(m_basePotentiometer.get() < 125){
+
+        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("less than set point " + m_armPotentiometer.get());
+
+
+      }
+      else if (m_basePotentiometer.get() > 130){
+        
+        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("more that set point " + m_armPotentiometer.get());
+      }
+      else {
+        m_baseMotor.setSpeed(0);
+       // System.out.println("at set point" + m_armPotentiometer.get());
+
+      }
+    }
+    public void movePointRight(){
+      if(m_basePotentiometer.get() < 75){
+
+        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("less than set point " + m_armPotentiometer.get());
+
+
+      }
+      else if (m_basePotentiometer.get() > 70){
+        
+        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("more that set point " + m_armPotentiometer.get());
+      }
+      else {
+        m_baseMotor.setSpeed(0);
+       // System.out.println("at set point" + m_armPotentiometer.get());
+
+      }
     }
     public void periodic(){
 
       SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
       SmartDashboard.putNumber("Arm Pot ", m_armPotentiometer.get());
 
-      System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
+      //System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
   }
 }

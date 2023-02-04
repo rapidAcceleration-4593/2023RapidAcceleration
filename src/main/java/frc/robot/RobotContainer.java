@@ -16,6 +16,8 @@ import frc.robot.commands.armCommands.armExtensionIn;
 import frc.robot.commands.armCommands.armExtensionOut;
 import frc.robot.commands.armCommands.armStop;
 import frc.robot.commands.armCommands.armUp;
+import frc.robot.commands.armCommands.moveLeft;
+import frc.robot.commands.armCommands.moveRight;
 import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
@@ -48,23 +50,29 @@ public class RobotContainer {
     /* Driver Buttons */
     driver.x().onTrue(new InstantCommand(() -> m_swerve.zeroGyro()));
     
-    driver.a().onTrue(new armUp(m_arm));
-    driver.a().onFalse(new armStop(m_arm));
+    // driver.a().onTrue(new armUp(m_arm));
+    // driver.a().onFalse(new armStop(m_arm));
     
     // driver.a().onTrue(new motorTest(m_arm));
     // driver.a().onFalse(new armStop(m_arm));
 
+    driver.a().whileTrue(new moveLeft(m_arm));
+    driver.a().whileFalse(new armStop(m_arm));
+
     // driver.b().onTrue(new armDown(m_arm));
     // driver.b().onFalse(new armStop(m_arm));
 
-    driver.b().onTrue(new moveUpPoint(m_arm));
-    driver.b().onFalse(new armStop(m_arm));
-    
-    driver.leftBumper().onTrue(new armBaseRotateLeft(m_arm));
-    driver.leftBumper().onFalse(new armStop(m_arm));
+    driver.b().whileTrue(new moveUpPoint(m_arm));
+    driver.b().whileFalse(new armStop(m_arm));
 
-    driver.rightBumper().onTrue(new armBaseRotateRight(m_arm));
-    driver.rightBumper().onFalse(new armStop(m_arm));
+    driver.y().whileTrue(new moveRight(m_arm));
+    driver.y().whileFalse(new armStop(m_arm));
+    
+    // driver.leftBumper().onTrue(new armBaseRotateLeft(m_arm));
+    // driver.leftBumper().onFalse(new armStop(m_arm));
+
+    // driver.rightBumper().onTrue(new armBaseRotateRight(m_arm));
+    // driver.rightBumper().onFalse(new armStop(m_arm));
 
     driver.start().onTrue(new armExtensionOut(m_arm));
     driver.start().onFalse(new armStop(m_arm));

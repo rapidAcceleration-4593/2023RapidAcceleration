@@ -4,18 +4,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm;
 
-public class moveUpPoint extends CommandBase{
+public class moveLeft extends CommandBase{
 
     private final arm m_arm;
 
-    public moveUpPoint(arm armPassedIn) {
+    public moveLeft(arm armPassedIn) {
         m_arm = armPassedIn;
         addRequirements(armPassedIn);
     }
 
     @Override
     public void execute() {
-        m_arm.moveUpPoint();
+        m_arm.movePointLeft();
     }
     
 }

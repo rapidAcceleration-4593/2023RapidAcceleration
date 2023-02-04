@@ -18,6 +18,7 @@ NetworkTableEntry tv = table.getEntry("tv");
     }
     public double horizontalOffset () {
 
+
         double x = tx.getDouble(0);
 
         System.out.println(x);
