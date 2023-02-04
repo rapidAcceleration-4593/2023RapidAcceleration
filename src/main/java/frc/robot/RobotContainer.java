@@ -16,6 +16,7 @@ import frc.robot.commands.armCommands.armExtensionIn;
 import frc.robot.commands.armCommands.armExtensionOut;
 import frc.robot.commands.armCommands.armStop;
 import frc.robot.commands.armCommands.armUp;
+import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
 
@@ -50,7 +51,13 @@ public class RobotContainer {
     driver.a().onTrue(new armUp(m_arm));
     driver.a().onFalse(new armStop(m_arm));
     
-    driver.b().onTrue(new armDown(m_arm));
+    // driver.a().onTrue(new motorTest(m_arm));
+    // driver.a().onFalse(new armStop(m_arm));
+
+    // driver.b().onTrue(new armDown(m_arm));
+    // driver.b().onFalse(new armStop(m_arm));
+
+    driver.b().onTrue(new moveUpPoint(m_arm));
     driver.b().onFalse(new armStop(m_arm));
     
     driver.leftBumper().onTrue(new armBaseRotateLeft(m_arm));
