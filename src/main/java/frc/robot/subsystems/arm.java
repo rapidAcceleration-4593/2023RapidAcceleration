@@ -26,21 +26,21 @@ public class arm extends SubsystemBase {
     private PWM m_armRotaionMotor;
     private SparkMaxPIDController m_ArmExtenPidController;
     private CANSparkMax m_motorTest;
-  
+
     public arm() {
-      m_basePotentiometer = new AnalogPotentiometer(1, 180, 0);
+     // m_basePotentiometer = new AnalogPotentiometer(1, 180, 0);
       m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
       m_baseMotor = new PWM(1);
       m_armRotaionMotor = new PWM(2);
       m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
     }
-  
+
     public void baseRotateLeft () {
       m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
     }
     public void baseRotateRight (){
       m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
-      
+
       System.out.println("Base Potentiometer" + m_basePotentiometer.get());
     }
     public void armRotateUp () {
@@ -66,24 +66,43 @@ public class arm extends SubsystemBase {
     }
     public void moveUpPoint(){
 
-      if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
+      double lerpResult = Lerp(Constants.ArmConstants.smallAngle, m_armPotentiometer.get(), .1);
 
-        m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
+      m_armRotaionMotor.setSpeed(lerpResult);
 
+      // if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
+
+      //   m_armRotaionMotor.setSpeed(lerpResult);
+
+      // }
+      // else if (m_armPotentiometer.get() > Constants.ArmConstants.smallAngle){
+
+      //   m_armRotaionMotor.setSpeed(-lerpResult);
+
+      // }
+      // else {
+      //   m_armRotaionMotor.setSpeed(0);
+      // }
+
+    }
+    public double LerpResult(double to, double from, double amount){
+      double result = (1 - amount) * to + amount * from;
+      return result;
+    }
+    public double Lerp(double to, double from, double amount){
+      double result = LerpResult(to, from, amount);
+      if (result > 1) {
+        result = Constants.ArmConstants.baseRotateSpeed;
       }
-      else if (m_armPotentiometer.get() > Constants.ArmConstants.largeAngle){
-        
-        m_armRotaionMotor.setSpeed(-Constants.ArmConstants.armRotateSpeed);
-      
-      }
-      else {
-        m_armRotaionMotor.setSpeed(0);
+      else if(result < -1){
+        result = -Constants.ArmConstants.baseRotateSpeed;
       }
 
+      return result;
     }
     public void periodic(){
 
-      SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
+      //SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
       SmartDashboard.putNumber("Arm Pot ", m_armPotentiometer.get());
 
       System.out.println("Arm Potentiometer" + m_armPotentiometer.get());

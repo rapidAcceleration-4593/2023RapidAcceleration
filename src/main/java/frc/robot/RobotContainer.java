@@ -48,8 +48,8 @@ public class RobotContainer {
     /* Driver Buttons */
     driver.x().onTrue(new InstantCommand(() -> m_swerve.zeroGyro()));
     
-    driver.a().onTrue(new armUp(m_arm));
-    driver.a().onFalse(new armStop(m_arm));
+    //driver.a().onTrue(new armUp(m_arm));
+    //driver.a().onFalse(new armStop(m_arm));
     
     // driver.a().onTrue(new motorTest(m_arm));
     // driver.a().onFalse(new armStop(m_arm));
