@@ -38,73 +38,83 @@ public class arm extends SubsystemBase {
     public void baseRotateLeft () {
       m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
     }
+
     public void baseRotateRight (){
       m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
 
       System.out.println("Base Potentiometer" + m_basePotentiometer.get());
     }
+
     public void armRotateUp () {
       m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
+
     public void armRotateDown () {
       m_armRotaionMotor.setSpeed(-Constants.ArmConstants.armRotateSpeed);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
+
     public void extesionOut() {
       m_extensionMotor.set(Constants.ArmConstants.armExtensionSpeed);
     }
+
     public void extesionIn() {
       m_extensionMotor.set(-Constants.ArmConstants.armExtensionSpeed);
     }
+
     public void stopArm(){
       m_armRotaionMotor.setSpeed(0);
       m_baseMotor.setSpeed(0);
       m_extensionMotor.set(0);
     }
+
     public void moveUpPoint(){
 
-      double lerpResult = Lerp(Constants.ArmConstants.smallAngle, m_armPotentiometer.get(), .1);
-
-      m_armRotaionMotor.setSpeed(lerpResult);
-
-      // if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
-
-      //   m_armRotaionMotor.setSpeed(lerpResult);
+      if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
 
       // }
       // else if (m_armPotentiometer.get() > Constants.ArmConstants.smallAngle){
 
-      //   m_armRotaionMotor.setSpeed(-lerpResult);
-
-      // }
-      // else {
-      //   m_armRotaionMotor.setSpeed(0);
-      // }
-
-    }
-    public double LerpResult(double to, double from, double amount){
-      double result = (1 - amount) * to + amount * from;
-      return result;
-    }
-    public double Lerp(double to, double from, double amount){
-      double result = LerpResult(to, from, amount);
-      if (result > 1) {
-        result = Constants.ArmConstants.baseRotateSpeed;
       }
-      else if(result < -1){
-        result = -Constants.ArmConstants.baseRotateSpeed;
+      else if (m_basePotentiometer.get() > 130){
+        
+        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("more that set point " + m_armPotentiometer.get());
       }
-
-      return result;
+      else {
+        m_baseMotor.setSpeed(0);
+       // System.out.println("at set point" + m_armPotentiometer.get());
+      }
     }
+
+    public void movePointRight(){
+      if(m_basePotentiometer.get() < 75){
+
+        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("less than set point " + m_armPotentiometer.get());
+
+
+      }
+      else if (m_basePotentiometer.get() > 70){
+        
+        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("more that set point " + m_armPotentiometer.get());
+      }
+      else {
+        m_baseMotor.setSpeed(0);
+       // System.out.println("at set point" + m_armPotentiometer.get());
+
+      }
+    }
+
     public void periodic(){
 
       //SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
       SmartDashboard.putNumber("Arm Pot ", m_armPotentiometer.get());
 
-      System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
+      //System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
   }
 }
