@@ -28,11 +28,11 @@ public class arm extends SubsystemBase {
     private CANSparkMax m_motorTest;
 
     public arm() {
-     // m_basePotentiometer = new AnalogPotentiometer(1, 180, 0);
+      m_basePotentiometer = new AnalogPotentiometer(1, 180, 0);
       m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
       m_baseMotor = new PWM(1);
       m_armRotaionMotor = new PWM(2);
-      m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
+     // m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
     }
 
     public void baseRotateLeft () {
@@ -68,26 +68,32 @@ public class arm extends SubsystemBase {
     public void stopArm(){
       m_armRotaionMotor.setSpeed(0);
       m_baseMotor.setSpeed(0);
-      m_extensionMotor.set(0);
+      // m_extensionMotor.set(0);
     }
 
     public void moveUpPoint(){
 
-      if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
+      m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
+
+      // if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
+
+      // // }
+      // // else if (m_armPotentiometer.get() > Constants.ArmConstants.smallAngle){
 
       // }
-      // else if (m_armPotentiometer.get() > Constants.ArmConstants.smallAngle){
-
-      }
-      else if (m_basePotentiometer.get() > 130){
+      // else if (m_basePotentiometer.get() > 130){
         
-        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
-        //System.out.println("more that set point " + m_armPotentiometer.get());
-      }
-      else {
-        m_baseMotor.setSpeed(0);
-       // System.out.println("at set point" + m_armPotentiometer.get());
-      }
+      //   m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+      //   //System.out.println("more that set point " + m_armPotentiometer.get());
+      // }
+      // else {
+      //   m_baseMotor.setSpeed(0);
+      //  // System.out.println("at set point" + m_armPotentiometer.get());
+      // }
+    }
+
+    public void moveDownPoint() {
+      m_armRotaionMotor.setSpeed(-Constants.ArmConstants.armRotateSpeed);
     }
 
     public void movePointRight(){
