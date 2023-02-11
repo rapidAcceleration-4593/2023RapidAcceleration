@@ -110,6 +110,26 @@ public class arm extends SubsystemBase {
       }
     }
 
+    public void movePointLeft(){
+      if(m_basePotentiometer.get() < 120){
+
+        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("less than set point " + m_armPotentiometer.get());
+
+
+      }
+      else if (m_basePotentiometer.get() > 100){
+        
+        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("more that set point " + m_armPotentiometer.get());
+      }
+      else {
+        m_baseMotor.setSpeed(0);
+       // System.out.println("at set point" + m_armPotentiometer.get());
+
+      }
+    }
+
     public void periodic(){
 
       //SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
