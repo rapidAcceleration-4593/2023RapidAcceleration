@@ -28,7 +28,7 @@ public class arm extends SubsystemBase {
     private CANSparkMax m_motorTest;
 
     public arm() {
-      m_basePotentiometer = new AnalogPotentiometer(1, 180, 0);
+      m_basePotentiometer = new AnalogPotentiometer(1, 314, 0);
       m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
       m_baseMotor = new PWM(1);
       m_armRotaionMotor = new PWM(2);
@@ -73,36 +73,32 @@ public class arm extends SubsystemBase {
 
     public void moveUpPoint(){
 
-      m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
+      if(m_armPotentiometer.get() < 120){
 
-      // if(m_armPotentiometer.get() < Constants.ArmConstants.smallAngle){
+        m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
 
-      // // }
-      // // else if (m_armPotentiometer.get() > Constants.ArmConstants.smallAngle){
-
-      // }
-      // else if (m_basePotentiometer.get() > 130){
+      }
+      else if (m_armPotentiometer.get() > 130){
         
-      //   m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
-      //   //System.out.println("more that set point " + m_armPotentiometer.get());
-      // }
-      // else {
-      //   m_baseMotor.setSpeed(0);
-      //  // System.out.println("at set point" + m_armPotentiometer.get());
-      // }
+       m_armRotaionMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        //System.out.println("more that set point " + m_armPotentiometer.get());
+      }
+      else {
+       m_armRotaionMotor.setSpeed(0);
+       // System.out.println("at set point" + m_armPotentiometer.get());
+      }
     }
 
     public void moveDownPoint() {
-      m_armRotaionMotor.setSpeed(-Constants.ArmConstants.armRotateSpeed);
+      m_armRotaionMotor.setSpeed(-.5);
     }
 
     public void movePointRight(){
+      
       if(m_basePotentiometer.get() < 75){
 
         m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("less than set point " + m_armPotentiometer.get());
-
-
       }
       else if (m_basePotentiometer.get() > 70){
         
@@ -138,7 +134,7 @@ public class arm extends SubsystemBase {
 
     public void periodic(){
 
-      //SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
+      SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
       SmartDashboard.putNumber("Arm Pot ", m_armPotentiometer.get());
 
       //System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
