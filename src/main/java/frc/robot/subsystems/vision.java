@@ -13,6 +13,7 @@ NetworkTableEntry tx = table.getEntry("tx");
 NetworkTableEntry ty = table.getEntry("ty");
 NetworkTableEntry ta = table.getEntry("ta");
 NetworkTableEntry tv = table.getEntry("tv");
+
     public vision() {
 
     }
@@ -47,5 +48,19 @@ NetworkTableEntry tv = table.getEntry("tv");
         return v;
 
     }
+    public boolean weGreen (){
 
+        boolean weGreen = false;
+
+        if (horizontalOffset() < 5 && horizontalOffset() > -5 && isTarget() == 1){
+            weGreen = true;
+        }
+        return weGreen;
+    }
+
+    public void periodic (){
+
+        SmartDashboard.putBoolean("Is target ", weGreen());
+
+    }
 }

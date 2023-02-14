@@ -95,12 +95,12 @@ public class arm extends SubsystemBase {
 
     public void movePointRight(){
       
-      if(m_basePotentiometer.get() < 75){
+      if(m_basePotentiometer.get() < 135){
 
         m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("less than set point " + m_armPotentiometer.get());
       }
-      else if (m_basePotentiometer.get() > 70){
+      else if (m_basePotentiometer.get() > 140){
         
         m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("more that set point " + m_armPotentiometer.get());
@@ -113,16 +113,16 @@ public class arm extends SubsystemBase {
     }
 
     public void movePointLeft(){
-      if(m_basePotentiometer.get() < 120){
+      if(m_basePotentiometer.get() < 200){
 
-        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("less than set point " + m_armPotentiometer.get());
 
 
       }
-      else if (m_basePotentiometer.get() > 100){
+      else if (m_basePotentiometer.get() > 205){
         
-        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
+        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("more that set point " + m_armPotentiometer.get());
       }
       else {

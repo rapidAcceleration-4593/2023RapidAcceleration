@@ -22,6 +22,7 @@ import frc.robot.commands.armCommands.moveRight;
 import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
+import frc.robot.subsystems.vision;
 
 public class RobotContainer {
   // Auton Chooser
@@ -30,6 +31,7 @@ public class RobotContainer {
   // Robot subsystems
   private Swerve m_swerve = new Swerve();
   private arm m_arm = new arm();
+  private vision m_Vision = new vision();
 
   // Xbox controllers
   public static final CommandXboxController driver =
