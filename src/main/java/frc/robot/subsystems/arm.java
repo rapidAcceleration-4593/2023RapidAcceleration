@@ -14,7 +14,7 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.armCommands.armUp;
+import frc.robot.commands.armCommands.manualArmControl.armUp;
 
 public class arm extends SubsystemBase {
 
@@ -24,6 +24,7 @@ public class arm extends SubsystemBase {
     private CANSparkMax m_extensionMotor;
     private PWM m_baseMotor;
     private PWM m_armRotaionMotor;
+    private PWM m_scorer;
     private SparkMaxPIDController m_ArmExtenPidController;
     private CANSparkMax m_motorTest;
 
@@ -32,6 +33,7 @@ public class arm extends SubsystemBase {
       m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
       m_baseMotor = new PWM(1);
       m_armRotaionMotor = new PWM(2);
+      m_scorer = new PWM(3);
      // m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
     }
 
@@ -69,6 +71,7 @@ public class arm extends SubsystemBase {
       m_armRotaionMotor.setSpeed(0);
       m_baseMotor.setSpeed(0);
       // m_extensionMotor.set(0);
+      m_scorer.setSpeed(0);
     }
 
     public void moveUpPoint(){
@@ -130,6 +133,15 @@ public class arm extends SubsystemBase {
        // System.out.println("at set point" + m_armPotentiometer.get());
 
       }
+    }
+
+    public void theScorer(){
+      m_scorer.setSpeed(.5);
+
+    }
+
+    public void theReverseScorer(){
+    m_scorer.setSpeed(-.5);
     }
 
     public void periodic(){

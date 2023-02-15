@@ -13,6 +13,9 @@ NetworkTableEntry tx = table.getEntry("tx");
 NetworkTableEntry ty = table.getEntry("ty");
 NetworkTableEntry ta = table.getEntry("ta");
 NetworkTableEntry tv = table.getEntry("tv");
+//NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+
+//lightOff = table.getEntry("ledMode").setNumber(1);
 
     public vision() {
 
@@ -64,3 +67,4 @@ NetworkTableEntry tv = table.getEntry("tv");
 
     }
 }
+

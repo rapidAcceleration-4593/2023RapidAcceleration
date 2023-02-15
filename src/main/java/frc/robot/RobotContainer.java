@@ -9,17 +9,19 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.auton.Autos;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.armCommands.armBaseRotateLeft;
-import frc.robot.commands.armCommands.armBaseRotateRight;
-import frc.robot.commands.armCommands.armDown;
 import frc.robot.commands.armCommands.armExtensionIn;
 import frc.robot.commands.armCommands.armExtensionOut;
 import frc.robot.commands.armCommands.armStop;
-import frc.robot.commands.armCommands.armUp;
 import frc.robot.commands.armCommands.moveDownPoint;
 import frc.robot.commands.armCommands.moveLeft;
 import frc.robot.commands.armCommands.moveRight;
 import frc.robot.commands.armCommands.moveUpPoint;
+import frc.robot.commands.armCommands.theReverseScorer;
+import frc.robot.commands.armCommands.theScorer;
+import frc.robot.commands.armCommands.manualArmControl.armBaseRotateLeft;
+import frc.robot.commands.armCommands.manualArmControl.armBaseRotateRight;
+import frc.robot.commands.armCommands.manualArmControl.armDown;
+import frc.robot.commands.armCommands.manualArmControl.armUp;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
 import frc.robot.subsystems.vision;
@@ -52,12 +54,12 @@ public class RobotContainer {
 
     /* Driver Buttons */
     driver.x().onTrue(new InstantCommand(() -> m_swerve.zeroGyro()));
+
+    driver.a().whileTrue(new moveDownPoint(m_arm));
+    driver.a().whileFalse(new armStop(m_arm));
     
-    //driver.a().onTrue(new armUp(m_arm));
-    //driver.a().onFalse(new armStop(m_arm));
-    
-    // driver.a().onTrue(new motorTest(m_arm));
-    // driver.a().onFalse(new armStop(m_arm));
+    driver.y().whileTrue(new moveUpPoint(m_arm));
+    driver.y().whileFalse(new armStop(m_arm));
 
     driver.leftBumper().whileTrue(new moveLeft(m_arm));
     driver.leftBumper().whileFalse(new armStop(m_arm));
@@ -65,20 +67,11 @@ public class RobotContainer {
     driver.rightBumper().whileTrue(new moveRight(m_arm));
     driver.rightBumper().whileFalse(new armStop(m_arm));
 
-    // driver.b().onTrue(new armDown(m_arm));
-    // driver.b().onFalse(new armStop(m_arm));
+    driver.rightTrigger().whileTrue(new theScorer(m_arm));
+    driver.rightTrigger().whileFalse(new armStop(m_arm));
 
-    driver.y().whileTrue(new moveUpPoint(m_arm));
-    driver.y().whileFalse(new armStop(m_arm));
-
-    driver.a().whileTrue(new moveDownPoint(m_arm));
-    driver.a().whileFalse(new armStop(m_arm));
-    
-    // driver.leftBumper().onTrue(new armBaseRotateLeft(m_arm));
-    // driver.leftBumper().onFalse(new armStop(m_arm));
-
-    // driver.rightBumper().onTrue(new armBaseRotateRight(m_arm));
-    // driver.rightBumper().onFalse(new armStop(m_arm));
+    driver.leftTrigger().whileTrue(new theReverseScorer(m_arm));
+    driver.leftTrigger().whileFalse(new armStop(m_arm));
 
     driver.start().onTrue(new armExtensionOut(m_arm));
     driver.start().onFalse(new armStop(m_arm));

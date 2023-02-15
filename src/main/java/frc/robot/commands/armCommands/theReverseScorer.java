@@ -4,18 +4,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.arm;
 
-public class armDown extends CommandBase{
+public class theReverseScorer extends CommandBase{
 
     private final arm m_arm;
 
-    public armDown(arm armPassedIn) {
+    public theReverseScorer(arm armPassedIn) {
         m_arm = armPassedIn;
         addRequirements(armPassedIn);
     }
 
     @Override
     public void initialize() {
-        m_arm.armRotateDown();
+        m_arm.theReverseScorer();
     }
     
 }
