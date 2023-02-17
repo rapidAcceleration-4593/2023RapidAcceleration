@@ -14,7 +14,7 @@ public class theScorer extends CommandBase{
     }
 
     @Override
-    public void initialize() {
+    public void execute() {
         m_arm.theScorer();
     }
     

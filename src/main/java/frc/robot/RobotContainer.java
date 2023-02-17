@@ -9,15 +9,19 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.auton.Autos;
 import frc.robot.commands.TeleopSwerve;
+//import frc.robot.commands.armCommands.align;
 import frc.robot.commands.armCommands.armExtensionIn;
 import frc.robot.commands.armCommands.armExtensionOut;
 import frc.robot.commands.armCommands.armStop;
+import frc.robot.commands.armCommands.armVisionCombo;
 import frc.robot.commands.armCommands.moveDownPoint;
 import frc.robot.commands.armCommands.moveLeft;
 import frc.robot.commands.armCommands.moveRight;
 import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.commands.armCommands.theReverseScorer;
 import frc.robot.commands.armCommands.theScorer;
+import frc.robot.commands.armCommands.wristDown;
+import frc.robot.commands.armCommands.wristUp;
 import frc.robot.commands.armCommands.manualArmControl.armBaseRotateLeft;
 import frc.robot.commands.armCommands.manualArmControl.armBaseRotateRight;
 import frc.robot.commands.armCommands.manualArmControl.armDown;
@@ -38,6 +42,8 @@ public class RobotContainer {
   // Xbox controllers
   public static final CommandXboxController driver =
       new CommandXboxController(Constants.OperatorConstants.xboxController1Port);
+  public static final CommandXboxController auxDriver = 
+      new CommandXboxController(1);
   // Drive Controls
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -61,6 +67,12 @@ public class RobotContainer {
     driver.y().whileTrue(new moveUpPoint(m_arm));
     driver.y().whileFalse(new armStop(m_arm));
 
+    // driver.b().whileTrue(new armVisionCombo(m_Vision));
+    // driver.b().whileFalse(new armStop(m_arm));
+
+    // driver.b().whileTrue(new align(m_Vision));
+    // driver.b().whileFalse(new armStop(m_arm))
+
     driver.leftBumper().whileTrue(new moveLeft(m_arm));
     driver.leftBumper().whileFalse(new armStop(m_arm));
 
@@ -78,6 +90,12 @@ public class RobotContainer {
 
     driver.back().onTrue(new armExtensionIn(m_arm));
     driver.back().onFalse(new armStop(m_arm));
+
+    auxDriver.y().whileTrue(new wristUp(m_arm));
+    auxDriver.y().whileFalse(new armStop(m_arm));
+
+    auxDriver.a().whileTrue(new wristDown(m_arm));
+    auxDriver.a().whileFalse(new armStop(m_arm));
 
   }
 

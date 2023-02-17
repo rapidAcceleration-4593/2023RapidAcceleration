@@ -25,6 +25,8 @@ public class arm extends SubsystemBase {
     private PWM m_baseMotor;
     private PWM m_armRotaionMotor;
     private PWM m_scorer;
+    private PWM m_wrist;
+
     private SparkMaxPIDController m_ArmExtenPidController;
     private CANSparkMax m_motorTest;
 
@@ -33,8 +35,9 @@ public class arm extends SubsystemBase {
       m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
       m_baseMotor = new PWM(1);
       m_armRotaionMotor = new PWM(2);
-      m_scorer = new PWM(3);
-     // m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
+      m_scorer = new PWM(4);
+      m_wrist = new PWM(3);
+      m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
     }
 
     public void baseRotateLeft () {
@@ -70,8 +73,9 @@ public class arm extends SubsystemBase {
     public void stopArm(){
       m_armRotaionMotor.setSpeed(0);
       m_baseMotor.setSpeed(0);
-      // m_extensionMotor.set(0);
+      m_extensionMotor.set(0);
       m_scorer.setSpeed(0);
+      m_wrist.setSpeed(0);
     }
 
     public void moveUpPoint(){
@@ -98,50 +102,70 @@ public class arm extends SubsystemBase {
 
     public void movePointRight(){
       
+      double speedAdjust = 1;
+
+      // if(m_basePotentiometer.get() >  120 || m_basePotentiometer.get() < 150){
+      //   speedAdjust = .66;
+      // }
+      // else {
+      //   speedAdjust = 1;
+      // }
+
       if(m_basePotentiometer.get() < 135){
 
-        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
+        m_baseMotor.setSpeed(speedAdjust*Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("less than set point " + m_armPotentiometer.get());
       }
       else if (m_basePotentiometer.get() > 140){
         
-        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        m_baseMotor.setSpeed(speedAdjust*-Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("more that set point " + m_armPotentiometer.get());
       }
       else {
         m_baseMotor.setSpeed(0);
        // System.out.println("at set point" + m_armPotentiometer.get());
-
       }
     }
 
     public void movePointLeft(){
+      
+      double speedAdjust = 1;
+
+      // if(m_armPotentiometer.get() >  190 || m_armPotentiometer.get() < 210){
+      //   speedAdjust = .66;
+      // }
+      // else {
+      //   speedAdjust = 1;
+      // }
+      
       if(m_basePotentiometer.get() < 200){
-
-        m_baseMotor.setSpeed(Constants.ArmConstants.baseRotateSpeed);
+        m_baseMotor.setSpeed(speedAdjust*Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("less than set point " + m_armPotentiometer.get());
-
-
       }
       else if (m_basePotentiometer.get() > 205){
-        
-        m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+        m_baseMotor.setSpeed(speedAdjust*-Constants.ArmConstants.baseRotateSpeed);
         //System.out.println("more that set point " + m_armPotentiometer.get());
       }
       else {
         m_baseMotor.setSpeed(0);
        // System.out.println("at set point" + m_armPotentiometer.get());
-
       }
     }
 
     public void theScorer(){
-      m_scorer.setSpeed(.5);
+     m_scorer.setSpeed(1);
 
     }
 
     public void theReverseScorer(){
-    m_scorer.setSpeed(-.5);
+      m_scorer.setSpeed(-1);
+    }
+
+    public void wristUp(){
+      m_wrist.setSpeed(.775);
+    }
+    public void wristDown(){
+      m_wrist.setSpeed(-.775);
     }
 
     public void periodic(){
