@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.SparkMaxPIDController;
@@ -24,8 +26,8 @@ public class arm extends SubsystemBase {
     private CANSparkMax m_extensionMotor;
     private PWM m_baseMotor;
     private PWM m_armRotaionMotor;
-    private PWM m_scorer;
-    private PWM m_wrist;
+    private PWMSparkMax m_scorer;
+    private PWMTalonSRX m_wrist;
 
     private SparkMaxPIDController m_ArmExtenPidController;
     private CANSparkMax m_motorTest;
@@ -35,8 +37,8 @@ public class arm extends SubsystemBase {
       m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
       m_baseMotor = new PWM(1);
       m_armRotaionMotor = new PWM(2);
-      m_scorer = new PWM(4);
-      m_wrist = new PWM(3);
+      m_scorer = new PWMSparkMax(4);
+      m_wrist = new PWMTalonSRX(9);
       m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
     }
 
@@ -74,8 +76,8 @@ public class arm extends SubsystemBase {
       m_armRotaionMotor.setSpeed(0);
       m_baseMotor.setSpeed(0);
       m_extensionMotor.set(0);
-      m_scorer.setSpeed(0);
-      m_wrist.setSpeed(0);
+      m_scorer.set(0);
+      //m_wrist.set(0);
     }
 
     public void moveUpPoint(){
@@ -104,7 +106,10 @@ public class arm extends SubsystemBase {
       
       double speedAdjust = 1;
 
-      // if(m_basePotentiometer.get() >  120 || m_basePotentiometer.get() < 150){
+      // if(m_basePotentiometer.get() >  120){
+      //   speedAdjust = .66;
+      // }
+      // else if (m_basePotentiometer.get() < 150){
       //   speedAdjust = .66;
       // }
       // else {
@@ -153,19 +158,25 @@ public class arm extends SubsystemBase {
     }
 
     public void theScorer(){
-     m_scorer.setSpeed(1);
+     m_scorer.set(1);
 
     }
 
     public void theReverseScorer(){
-      m_scorer.setSpeed(-1);
+      m_scorer.set(-1);
+    }
+    public void scorerStop(){
+      m_scorer.set(0);
     }
 
     public void wristUp(){
-      m_wrist.setSpeed(.775);
+      m_wrist.set(-.5);
     }
     public void wristDown(){
-      m_wrist.setSpeed(-.775);
+      m_wrist.set(.5);
+    }
+    public void wristStop(){
+      m_wrist.set(0);
     }
 
     public void periodic(){

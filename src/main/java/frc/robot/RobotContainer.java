@@ -18,9 +18,11 @@ import frc.robot.commands.armCommands.moveDownPoint;
 import frc.robot.commands.armCommands.moveLeft;
 import frc.robot.commands.armCommands.moveRight;
 import frc.robot.commands.armCommands.moveUpPoint;
+import frc.robot.commands.armCommands.scorerStop;
 import frc.robot.commands.armCommands.theReverseScorer;
 import frc.robot.commands.armCommands.theScorer;
 import frc.robot.commands.armCommands.wristDown;
+import frc.robot.commands.armCommands.wristStop;
 import frc.robot.commands.armCommands.wristUp;
 import frc.robot.commands.armCommands.manualArmControl.armBaseRotateLeft;
 import frc.robot.commands.armCommands.manualArmControl.armBaseRotateRight;
@@ -80,10 +82,10 @@ public class RobotContainer {
     driver.rightBumper().whileFalse(new armStop(m_arm));
 
     driver.rightTrigger().whileTrue(new theScorer(m_arm));
-    driver.rightTrigger().whileFalse(new armStop(m_arm));
+    driver.rightTrigger().whileFalse(new scorerStop(m_arm));
 
     driver.leftTrigger().whileTrue(new theReverseScorer(m_arm));
-    driver.leftTrigger().whileFalse(new armStop(m_arm));
+    driver.leftTrigger().whileFalse(new scorerStop(m_arm));
 
     driver.start().onTrue(new armExtensionOut(m_arm));
     driver.start().onFalse(new armStop(m_arm));
@@ -92,10 +94,10 @@ public class RobotContainer {
     driver.back().onFalse(new armStop(m_arm));
 
     auxDriver.y().whileTrue(new wristUp(m_arm));
-    auxDriver.y().whileFalse(new armStop(m_arm));
+    auxDriver.y().whileFalse(new wristStop(m_arm));
 
     auxDriver.a().whileTrue(new wristDown(m_arm));
-    auxDriver.a().whileFalse(new armStop(m_arm));
+    auxDriver.a().whileFalse(new wristStop(m_arm));
 
   }
 
