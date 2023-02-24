@@ -108,7 +108,7 @@ public class RobotContainer {
             m_swerve,
             () -> driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
-            () -> driver.getRawAxis(rotationAxis),
+            () -> -driver.getRawAxis(rotationAxis),
             () -> driver.rightStick().getAsBoolean()));
   }
 
