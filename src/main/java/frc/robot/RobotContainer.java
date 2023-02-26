@@ -66,7 +66,7 @@ public class RobotContainer {
     driver.a().whileTrue(new moveDownPoint(m_arm));
     driver.a().whileFalse(new armStop(m_arm));
     
-    driver.y().whileTrue(new moveUpPoint(m_arm));
+    driver.y().whileTrue(new armUp(m_arm));
     driver.y().whileFalse(new armStop(m_arm));
 
     // driver.b().whileTrue(new armVisionCombo(m_Vision));
@@ -75,29 +75,29 @@ public class RobotContainer {
     // driver.b().whileTrue(new align(m_Vision));
     // driver.b().whileFalse(new armStop(m_arm))
 
-    driver.leftBumper().whileTrue(new moveLeft(m_arm));
+    driver.leftBumper().whileTrue(new armBaseRotateLeft(m_arm));
     driver.leftBumper().whileFalse(new armStop(m_arm));
 
-    driver.rightBumper().whileTrue(new moveRight(m_arm));
+    driver.rightBumper().whileTrue(new armBaseRotateRight(m_arm));
     driver.rightBumper().whileFalse(new armStop(m_arm));
 
-    driver.rightTrigger().whileTrue(new theScorer(m_arm));
-    driver.rightTrigger().whileFalse(new scorerStop(m_arm));
+    auxDriver.rightBumper().whileTrue(new theScorer(m_arm));
+    auxDriver.rightBumper().whileFalse(new scorerStop(m_arm));
 
-    driver.leftTrigger().whileTrue(new theReverseScorer(m_arm));
-    driver.leftTrigger().whileFalse(new scorerStop(m_arm));
+    auxDriver.leftBumper().whileTrue(new theReverseScorer(m_arm));
+    auxDriver.leftBumper().whileFalse(new scorerStop(m_arm));
 
-    driver.start().onTrue(new armExtensionOut(m_arm));
-    driver.start().onFalse(new armStop(m_arm));
+    auxDriver.b().onTrue(new armExtensionOut(m_arm));
+    auxDriver.b().onFalse(new armStop(m_arm));
 
-    driver.back().onTrue(new armExtensionIn(m_arm));
-    driver.back().onFalse(new armStop(m_arm));
+    auxDriver.x().onTrue(new armExtensionIn(m_arm));
+    auxDriver.x().onFalse(new armStop(m_arm));
 
-    auxDriver.y().whileTrue(new wristUp(m_arm));
-    auxDriver.y().whileFalse(new wristStop(m_arm));
-
-    auxDriver.a().whileTrue(new wristDown(m_arm));
+    auxDriver.a().whileTrue(new wristUp(m_arm));
     auxDriver.a().whileFalse(new wristStop(m_arm));
+
+    auxDriver.y().whileTrue(new wristDown(m_arm));
+    auxDriver.y().whileFalse(new wristStop(m_arm));
 
   }
 
