@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
+import frc.robot.commands.armCommands.theScorer;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.arm;
 
 import java.util.List;
 
 public class Autos extends SequentialCommandGroup {
-  public Autos(Swerve s_Swerve) {
+  public Autos(Swerve s_Swerve, arm m_arm) {
     TrajectoryConfig config =
         new TrajectoryConfig(
                 Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -32,7 +34,7 @@ public class Autos extends SequentialCommandGroup {
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(new Translation2d(1, 0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(2, 0, new Rotation2d(360)),
+            new Pose2d(2, 0, new Rotation2d(3)),
             config);
 
     var thetaController =
@@ -57,5 +59,6 @@ public class Autos extends SequentialCommandGroup {
     addCommands(
         new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
         swerveControllerCommand);
+        new theScorer(m_arm);
   }
 }

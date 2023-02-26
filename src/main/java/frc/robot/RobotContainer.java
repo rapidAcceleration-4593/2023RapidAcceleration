@@ -38,7 +38,7 @@ public class RobotContainer {
 
   // Robot subsystems
   private Swerve m_swerve = new Swerve();
-  private arm m_arm = new arm();
+  public arm m_arm = new arm();
   private vision m_Vision = new vision();
 
   // Xbox controllers
@@ -87,16 +87,16 @@ public class RobotContainer {
     auxDriver.leftBumper().whileTrue(new theReverseScorer(m_arm));
     auxDriver.leftBumper().whileFalse(new scorerStop(m_arm));
 
-    auxDriver.b().onTrue(new armExtensionOut(m_arm));
+    auxDriver.b().onTrue(new armExtensionIn(m_arm));
     auxDriver.b().onFalse(new armStop(m_arm));
 
-    auxDriver.x().onTrue(new armExtensionIn(m_arm));
+    auxDriver.x().onTrue(new armExtensionOut(m_arm));
     auxDriver.x().onFalse(new armStop(m_arm));
 
-    auxDriver.a().whileTrue(new wristUp(m_arm));
+    auxDriver.a().whileTrue(new wristDown(m_arm));
     auxDriver.a().whileFalse(new wristStop(m_arm));
 
-    auxDriver.y().whileTrue(new wristDown(m_arm));
+    auxDriver.y().whileTrue(new wristUp(m_arm));
     auxDriver.y().whileFalse(new wristStop(m_arm));
 
   }
@@ -128,6 +128,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // return m_autonChooser.getSelected();
-    return new Autos(m_swerve);
+    return new Autos(m_swerve, m_arm);
   }
 }

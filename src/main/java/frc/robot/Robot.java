@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.logging.SpartanLogManager;
+import java.util.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -77,7 +78,14 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    m_robotContainer.m_arm.theReverseScorer();
+  }
+
+  @Override
+  public void autonomousExit() {
+    m_robotContainer.m_arm.scorerStop();
+  }
 
   @Override
   public void teleopInit() {
