@@ -71,10 +71,12 @@ public class arm extends SubsystemBase {
 
     public void extesionOut() {
       m_extensionMotor.set(Constants.ArmConstants.armExtensionSpeed);
+      m_relay.set(Relay.Value.kReverse);
     }
 
     public void extesionIn() {
       m_extensionMotor.set(-Constants.ArmConstants.armExtensionSpeed);
+      m_relay.set(Relay.Value.kReverse);
     }
 
     public void stopArm(){
@@ -158,9 +160,11 @@ public class arm extends SubsystemBase {
 
     public void wristUp(){
       m_wrist.set(-1);
+      m_relay.set(Relay.Value.kReverse);
     }
     public void wristDown(){
       m_wrist.set(1);
+      m_relay.set(Relay.Value.kReverse);
     }
     public void wristStop(){
       m_wrist.set(0);
