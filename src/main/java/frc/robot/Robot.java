@@ -23,6 +23,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private long startTime;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -68,6 +70,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    startTime = System.currentTimeMillis();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -79,7 +83,13 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    m_robotContainer.m_arm.theReverseScorer();
+    // run wheel for 5 seconds then stop!
+    if(System.currentTimeMillis() - startTime < 5000) {
+      m_robotContainer.m_arm.theReverseScorer();
+    }
+    else {
+      m_robotContainer.m_arm.scorerStop();
+    }
   }
 
   @Override
