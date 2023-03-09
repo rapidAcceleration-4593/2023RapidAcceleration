@@ -93,11 +93,11 @@ public class RobotContainer {
     auxDriver.x().onTrue(new armExtensionOut(m_arm));
     auxDriver.x().onFalse(new armStop(m_arm));
 
-    auxDriver.a().whileTrue(new wristDown(m_arm));
-    auxDriver.a().whileFalse(new wristStop(m_arm));
+    auxDriver.a().onTrue(new wristDown(m_arm));
+    auxDriver.a().onFalse(new wristStop(m_arm));
 
-    auxDriver.y().whileTrue(new wristUp(m_arm));
-    auxDriver.y().whileFalse(new wristStop(m_arm));
+    auxDriver.y().onTrue(new wristUp(m_arm));
+    auxDriver.y().onFalse(new wristStop(m_arm));
 
   }
 
@@ -106,8 +106,8 @@ public class RobotContainer {
     m_swerve.setDefaultCommand(
         new TeleopSwerve(
             m_swerve,
-            () -> driver.getRawAxis(translationAxis),
-            () -> -driver.getRawAxis(strafeAxis),
+            () -> -driver.getRawAxis(translationAxis),
+            () -> driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
             () -> driver.rightStick().getAsBoolean()));
   }
