@@ -106,6 +106,10 @@ public class Swerve extends SubsystemBase {
         ? Rotation2d.fromDegrees(360 - gyro.getYaw())
         : Rotation2d.fromDegrees(gyro.getYaw());
   }
+  
+  public void setChassisSpeeds(ChassisSpeeds speeds) {
+    //mSwerveMods.setChassisSpeeds(speeds);
+  }
 
   @Override
   public void periodic() {

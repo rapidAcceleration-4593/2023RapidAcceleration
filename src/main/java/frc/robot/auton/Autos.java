@@ -1,64 +1,75 @@
 package frc.robot.auton;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.commands.armCommands.theScorer;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
 
-import java.util.List;
+import java.util.HashMap;
 
-public class Autos extends SequentialCommandGroup {
-  public Autos(Swerve s_Swerve, arm m_arm) {
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(Constants.SwerveConstants.swerveKinematics);
+@SuppressWarnings("unused")
+public final class Autos {
 
-    // An example trajectory to follow.  All units in meters.
-    Trajectory exampleTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1.5, 0)),
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(3, 0, new Rotation2d(0)),
-            config);
+  private final Swerve swerve;
+  private final arm arm;
+  private final SendableChooser<Command> autonChooser;
+  private final HashMap<String, Command> eventMap;
+  private final SwerveAutoBuilder autonBuilder;
 
-    var thetaController =
-        new ProfiledPIDController(
-            Constants.AutoConstants.kPThetaController,
-            0,
-            0,
-            Constants.AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+  public Autos(Swerve swerve, arm arm) {
+    this.swerve = swerve;
+    this.arm = arm;
 
-    SwerveControllerCommand swerveControllerCommand =
-        new SwerveControllerCommand(
-            exampleTrajectory,
-            s_Swerve::getPose,
-            Constants.SwerveConstants.swerveKinematics,
-            new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-            new PIDController(Constants.AutoConstants.kPYController, 0, 0),
-            thetaController,
-            s_Swerve::setModuleStates,
-            s_Swerve);
+    eventMap = new HashMap<>();
+    setMarkers();
 
-    addCommands(    
-        new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
-        swerveControllerCommand);
-        //new theScorer(m_arm);
+    autonBuilder =
+        new SwerveAutoBuilder(
+            swerve::getPose,
+            swerve::resetOdometry,
+            new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0),
+            new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, 0.0),
+            swerve::setChassisSpeeds,
+            eventMap,
+            true,
+            swerve);
+
+    autonChooser = new SendableChooser<Command>();
+   // autonChooser.setDefaultOption("No-op", new InstantCommand());
+    autonChooser.setDefaultOption("Simple 1", simplePath());
+    // autonChooser.addOption("Score 2 Money Zone", score2MoneyZone());
+    // autonChooser.addOption("Score 3 Money Zone", score3MoneyZone());
+    // autonChooser.addOption("Score 2 Far Zone", score2FarZone());
+    // autonChooser.addOption("Score 3 Far Zone", score3FarZone());
+
+    SmartDashboard.putData("Auton Chooser", autonChooser);
+  
+  }
+
+  private void setMarkers() {
+    eventMap.put("Wait a Second", new WaitCommand(1.5));
+    eventMap.put("Reset Gyro", new InstantCommand(() -> swerve.zeroGyro()));
+  }
+
+    public Command simplePath(){
+      return autonBuilder.fullAuto(
+        PathPlanner.loadPath("simple1", new PathConstraints(
+        Constants.AutoConstants.kMaxSpeedMetersPerSecond, 
+        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+
+  public Command getSelected() {
+    return simplePath();
   }
 }
