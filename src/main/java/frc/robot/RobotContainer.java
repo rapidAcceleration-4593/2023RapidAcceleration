@@ -116,6 +116,7 @@ public class RobotContainer {
   public void registerAutons() {
     // Register autons.
     m_autonChooser.setDefaultOption("No-op", new InstantCommand());
+    m_autonChooser.addOption(null, getAutonomousCommand());
 
     // Push the chooser to the dashboard.
     SmartDashboard.putData("Auton Chooser", m_autonChooser);

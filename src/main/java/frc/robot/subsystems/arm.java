@@ -26,6 +26,7 @@ public class arm extends SubsystemBase {
 
     private CANSparkMax m_extensionMotor;
     private PWM m_baseMotor;
+    private PWM m_armMotorP2;
     private PWM m_armRotaionMotor;
     private PWMSparkMax m_scorer;
     private PWMTalonSRX m_wrist;
@@ -38,10 +39,15 @@ public class arm extends SubsystemBase {
     public arm() {
       m_basePotentiometer = new AnalogPotentiometer(1, 314, 0);
       m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
-      m_baseMotor = new PWM(1);
+      //m_baseMotor = new PWM(1);
+     
+      m_armMotorP2 = new PWM(1); 
       m_armRotaionMotor = new PWM(2);
-      m_scorer = new PWMSparkMax(4);
+      
+      m_scorer = new PWMSparkMax(3);
+      
       m_wrist = new PWMTalonSRX(0);
+      
       m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
 
       m_relay = new Relay(0);
@@ -52,19 +58,21 @@ public class arm extends SubsystemBase {
     }
 
     public void baseRotateRight (){
-      m_baseMotor.setSpeed(-Constants.ArmConstants.baseRotateSpeed);
+      m_baseMotor.setSpeed(-.66);
 
       System.out.println("Base Potentiometer" + m_basePotentiometer.get());
     }
 
     public void armRotateUp () {
-      m_armRotaionMotor.setSpeed(Constants.ArmConstants.armRotateSpeed);
+      m_armRotaionMotor.setSpeed(-.75);
+      m_armMotorP2.setSpeed(-.75);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
 
     public void armRotateDown () {
-      m_armRotaionMotor.setSpeed(-Constants.ArmConstants.armRotateSpeed);
+      m_armRotaionMotor.setSpeed(-.5);
+      //m_armMotorP2.setSpeed(-.5);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
@@ -81,7 +89,8 @@ public class arm extends SubsystemBase {
 
     public void stopArm(){
       m_armRotaionMotor.setSpeed(0);
-      m_baseMotor.setSpeed(0);
+      m_armMotorP2.setSpeed(0);
+      //m_baseMotor.setSpeed(0);
       m_extensionMotor.set(0);
       m_scorer.set(0);
       //m_wrist.set(0);
@@ -106,41 +115,42 @@ public class arm extends SubsystemBase {
     }
 
     public void moveDownPoint() {
-      m_armRotaionMotor.setSpeed(-.5);
+      m_armRotaionMotor.setSpeed(.75);
+      m_armMotorP2.setSpeed(.75);
     }
 
     public void movePointRight(){
 
-      if(m_basePotentiometer.get() < 150){
+      // if(m_basePotentiometer.get() < 150){
 
-        m_baseMotor.setSpeed(.66);
-        //System.out.println("less than set point " + m_armPotentiometer.get());
-      }
-      else if (m_basePotentiometer.get() > 155){
+      //   m_baseMotor.setSpeed(.66);
+      //   //System.out.println("less than set point " + m_armPotentiometer.get());
+      // }
+      // else if (m_basePotentiometer.get() > 155){
         
-        m_baseMotor.setSpeed(-.66);
-        //System.out.println("more that set point " + m_armPotentiometer.get());
-      }
-      else {
-        m_baseMotor.setSpeed(0);
-       // System.out.println("at set point" + m_armPotentiometer.get());
-      }
+      //   m_baseMotor.setSpeed(-.66);
+      //   //System.out.println("more that set point " + m_armPotentiometer.get());
+      // }
+      // else {
+      //   m_baseMotor.setSpeed(0);
+      //  // System.out.println("at set point" + m_armPotentiometer.get());
+      // }
     }
 
     public void movePointLeft(){
             
-      if(m_basePotentiometer.get() < 260){
-        m_baseMotor.setSpeed(.66);
-        //System.out.println("less than set point " + m_armPotentiometer.get());
-      }
-      else if (m_basePotentiometer.get() > 265){
-        m_baseMotor.setSpeed(-.66);
-        //System.out.println("more that set point " + m_armPotentiometer.get());
-      }
-      else {
-        m_baseMotor.setSpeed(0);
-       // System.out.println("at set point" + m_armPotentiometer.get());
-      }
+      // if(m_basePotentiometer.get() < 260){
+      //   m_baseMotor.setSpeed(.66);
+      //   //System.out.println("less than set point " + m_armPotentiometer.get());
+      // }
+      // else if (m_basePotentiometer.get() > 265){
+      //   m_baseMotor.setSpeed(-.66);
+      //   //System.out.println("more that set point " + m_armPotentiometer.get());
+      // }
+      // else {
+      //   m_baseMotor.setSpeed(0);
+      //  // System.out.println("at set point" + m_armPotentiometer.get());
+      // }
     }
 
     public void theScorer(){

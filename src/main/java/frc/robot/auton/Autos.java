@@ -56,9 +56,9 @@ public class Autos extends SequentialCommandGroup {
             s_Swerve::setModuleStates,
             s_Swerve);
 
-    addCommands(
+    addCommands(    
         new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
         swerveControllerCommand);
-        new theScorer(m_arm);
+        //new theScorer(m_arm);
   }
 }
