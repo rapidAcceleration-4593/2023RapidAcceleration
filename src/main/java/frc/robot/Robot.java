@@ -84,12 +84,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     // run wheel for 5 seconds then stop!
-    if(System.currentTimeMillis() - startTime < 5000) {
-      m_robotContainer.m_arm.theReverseScorer();
-    }
-    else {
-      m_robotContainer.m_arm.scorerStop();
-    }
+  //   if(System.currentTimeMillis() - startTime < 5000) {
+  //     m_robotContainer.m_arm.theReverseScorer();
+  //   }
+  //   else {
+  //     m_robotContainer.m_arm.scorerStop();
+  //   }
   }
 
   @Override

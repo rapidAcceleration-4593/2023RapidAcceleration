@@ -8,10 +8,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
+import frc.robot.commands.armCommands.moveUpPoint;
+import frc.robot.commands.armCommands.scorerStop;
+import frc.robot.commands.armCommands.theReverseScorer;
 import frc.robot.commands.armCommands.theScorer;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
@@ -58,6 +62,8 @@ public class Autos extends SequentialCommandGroup {
 
     addCommands(    
         new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
+        new theReverseScorer(m_arm).withTimeout(1),
+        new scorerStop(m_arm).withTimeout(.1),
         swerveControllerCommand);
         //new theScorer(m_arm);
   }

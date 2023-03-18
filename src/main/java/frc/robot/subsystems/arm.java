@@ -34,6 +34,7 @@ public class arm extends SubsystemBase {
     private SparkMaxPIDController m_ArmExtenPidController;
     private CANSparkMax m_motorTest;
 
+
     //double armPotVal = m_armPotentiometer.get();
 
     public arm() {
@@ -51,8 +52,6 @@ public class arm extends SubsystemBase {
       m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
 
       m_relay = new Relay(0);
-
-      
     } 
 
     public void baseRotateLeft () {
