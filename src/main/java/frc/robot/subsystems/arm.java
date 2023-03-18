@@ -21,11 +21,9 @@ import edu.wpi.first.wpilibj.Relay;
 
 public class arm extends SubsystemBase {
 
-    private AnalogPotentiometer m_basePotentiometer;
     private AnalogPotentiometer m_armPotentiometer;
 
     private CANSparkMax m_extensionMotor;
-    private PWM m_baseMotor;
     private PWM m_armMotorP2;
     private PWM m_armRotaionMotor;
     private PWMSparkMax m_scorer;
@@ -36,9 +34,11 @@ public class arm extends SubsystemBase {
     private SparkMaxPIDController m_ArmExtenPidController;
     private CANSparkMax m_motorTest;
 
+    //double armPotVal = m_armPotentiometer.get();
+
     public arm() {
-      m_basePotentiometer = new AnalogPotentiometer(1, 314, 0);
-      m_armPotentiometer = new AnalogPotentiometer(2, 314, 0);
+      //m_basePotentiometer = new AnalogPotentiometer(1, 314, 0);
+      m_armPotentiometer = new AnalogPotentiometer(1, 314, 0);
       //m_baseMotor = new PWM(1);
      
       m_armMotorP2 = new PWM(1); 
@@ -51,28 +51,30 @@ public class arm extends SubsystemBase {
       m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
 
       m_relay = new Relay(0);
+
+      
     } 
 
     public void baseRotateLeft () {
-      m_baseMotor.setSpeed(.66);
+      //m_baseMotor.setSpeed(.66);
     }
 
     public void baseRotateRight (){
-      m_baseMotor.setSpeed(-.66);
+      //m_baseMotor.setSpeed(-.66);
 
-      System.out.println("Base Potentiometer" + m_basePotentiometer.get());
+      //System.out.println("Base Potentiometer" + m_basePotentiometer.get());
     }
 
     public void armRotateUp () {
-      m_armRotaionMotor.setSpeed(-.75);
-      m_armMotorP2.setSpeed(-.75);
+      m_armRotaionMotor.setSpeed(-.5);
+      m_armMotorP2.setSpeed(-.5);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
 
     public void armRotateDown () {
-      m_armRotaionMotor.setSpeed(-.5);
-      //m_armMotorP2.setSpeed(-.5);
+      m_armRotaionMotor.setSpeed(.5);
+      m_armMotorP2.setSpeed(.5);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
@@ -98,59 +100,46 @@ public class arm extends SubsystemBase {
 
     public void moveUpPoint(){
 
-      // if(m_armPotentiometer.get() < 290){
+      if(m_armPotentiometer.get() < 150){
 
-      //   m_armRotaionMotor.setSpeed(.5);
+        m_armRotaionMotor.setSpeed(-.4);
+        m_armMotorP2.setSpeed(-.4);
 
-      // }
-      if (m_armPotentiometer.get() > 280){
+        System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
+
+      }
+      else if (m_armPotentiometer.get() > 150){
         
        m_armRotaionMotor.setSpeed(0);
+       m_armMotorP2.setSpeed(0);
         //System.out.println("more that set point " + m_armPotentiometer.get());
       }
       else {
-       m_armRotaionMotor.setSpeed(.5);
+       m_armRotaionMotor.setSpeed(0);
+       m_armMotorP2.setSpeed(0);
        // System.out.println("at set point" + m_armPotentiometer.get());
       }
     }
 
     public void moveDownPoint() {
-      m_armRotaionMotor.setSpeed(.75);
-      m_armMotorP2.setSpeed(.75);
-    }
+ 
 
-    public void movePointRight(){
+      if (m_armPotentiometer.get() > 69){
+        m_armRotaionMotor.setSpeed(.5);
+        m_armMotorP2.setSpeed(.5);
 
-      // if(m_basePotentiometer.get() < 150){
-
-      //   m_baseMotor.setSpeed(.66);
-      //   //System.out.println("less than set point " + m_armPotentiometer.get());
-      // }
-      // else if (m_basePotentiometer.get() > 155){
         
-      //   m_baseMotor.setSpeed(-.66);
-      //   //System.out.println("more that set point " + m_armPotentiometer.get());
-      // }
-      // else {
-      //   m_baseMotor.setSpeed(0);
-      //  // System.out.println("at set point" + m_armPotentiometer.get());
-      // }
-    }
+        
+      }
+      else if (m_armPotentiometer.get() < 69){
+        m_armRotaionMotor.setSpeed(0);
+        m_armMotorP2.setSpeed(0);
+      }
+      else {
+        m_armRotaionMotor.setSpeed(0);
+        m_armMotorP2.setSpeed(0);
+      }
 
-    public void movePointLeft(){
-            
-      // if(m_basePotentiometer.get() < 260){
-      //   m_baseMotor.setSpeed(.66);
-      //   //System.out.println("less than set point " + m_armPotentiometer.get());
-      // }
-      // else if (m_basePotentiometer.get() > 265){
-      //   m_baseMotor.setSpeed(-.66);
-      //   //System.out.println("more that set point " + m_armPotentiometer.get());
-      // }
-      // else {
-      //   m_baseMotor.setSpeed(0);
-      //  // System.out.println("at set point" + m_armPotentiometer.get());
-      // }
     }
 
     public void theScorer(){
@@ -169,11 +158,11 @@ public class arm extends SubsystemBase {
     }
 
     public void wristUp(){
-      m_wrist.set(-1);
+      m_wrist.set(.5);
       m_relay.set(Relay.Value.kReverse);
     }
     public void wristDown(){
-      m_wrist.set(1);
+      m_wrist.set(-.5);
       m_relay.set(Relay.Value.kReverse);
     }
     public void wristStop(){
@@ -182,7 +171,8 @@ public class arm extends SubsystemBase {
 
     public void periodic(){
 
-      SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
+
+     // SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
       SmartDashboard.putNumber("Arm Pot ", m_armPotentiometer.get());
 
       //System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
