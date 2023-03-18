@@ -15,8 +15,6 @@ import frc.robot.commands.armCommands.armExtensionOut;
 import frc.robot.commands.armCommands.armStop;
 import frc.robot.commands.armCommands.armVisionCombo;
 import frc.robot.commands.armCommands.moveDownPoint;
-import frc.robot.commands.armCommands.moveLeft;
-import frc.robot.commands.armCommands.moveRight;
 import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.commands.armCommands.scorerStop;
 import frc.robot.commands.armCommands.theReverseScorer;
@@ -34,13 +32,12 @@ import frc.robot.subsystems.vision;
 
 public class RobotContainer {
   // Auton Chooser
-  //private final SendableChooser<Command> m_autonChooser = new SendableChooser<Command>();
+  private final SendableChooser<Command> m_autonChooser = new SendableChooser<Command>();
 
   // Robot subsystems
   private Swerve m_swerve = new Swerve();
   public arm m_arm = new arm();
   private vision m_Vision = new vision();
-  private Autos m_Autos = new Autos(m_swerve, m_arm);
 
   // Xbox controllers
   public static final CommandXboxController driver =
@@ -116,15 +113,11 @@ public class RobotContainer {
   /** Register the autonomous modes to the chooser for the drivers to select. */
   public void registerAutons() {
     // Register autons.
-    // m_autonChooser = new SendableChooser<Command>();
-    // // autonChooser.setDefaultOption("No-op", new InstantCommand());
-    //  m_autonChooser.setDefaultOption("Simple 1", simplePath());
-    //  // autonChooser.addOption("Score 2 Money Zone", score2MoneyZone());
-    //  // autonChooser.addOption("Score 3 Money Zone", score3MoneyZone());
-    //  // autonChooser.addOption("Score 2 Far Zone", score2FarZone());
-    //  // autonChooser.addOption("Score 3 Far Zone", score3FarZone());
- 
-    //  SmartDashboard.putData("Auton Chooser", m_autonChooser);
+    m_autonChooser.setDefaultOption("No-op", new InstantCommand());
+    m_autonChooser.addOption(null, getAutonomousCommand());
+
+    // Push the chooser to the dashboard.
+    SmartDashboard.putData("Auton Chooser", m_autonChooser);
   }
 
   /**
@@ -133,7 +126,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-     return m_Autos.getSelected();
-   // return new Autos(m_swerve, m_arm);
+    // return m_autonChooser.getSelected();
+    return new Autos(m_swerve, m_arm);
   }
 }
