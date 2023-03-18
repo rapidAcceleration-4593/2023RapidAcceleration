@@ -65,15 +65,15 @@ public class arm extends SubsystemBase {
     }
 
     public void armRotateUp () {
-      m_armRotaionMotor.setSpeed(-.5);
-      m_armMotorP2.setSpeed(-.5);
+      m_armRotaionMotor.setSpeed(-.4);
+      m_armMotorP2.setSpeed(-.4);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
 
     public void armRotateDown () {
-      m_armRotaionMotor.setSpeed(.5);
-      m_armMotorP2.setSpeed(.5);
+      m_armRotaionMotor.setSpeed(.4);
+      m_armMotorP2.setSpeed(.4);
 
       System.out.println("arm Potentiometer" + m_armPotentiometer.get());
     }
@@ -124,8 +124,8 @@ public class arm extends SubsystemBase {
  
 
       if (m_armPotentiometer.get() > 69){
-        m_armRotaionMotor.setSpeed(.5);
-        m_armMotorP2.setSpeed(.5);
+        m_armRotaionMotor.setSpeed(.4);
+        m_armMotorP2.setSpeed(.4);
 
         
         

@@ -13,10 +13,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
+import frc.robot.commands.armCommands.armStop;
+import frc.robot.commands.armCommands.moveDownPoint;
 import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.commands.armCommands.scorerStop;
 import frc.robot.commands.armCommands.theReverseScorer;
 import frc.robot.commands.armCommands.theScorer;
+import frc.robot.commands.armCommands.manualArmControl.armDown;
+import frc.robot.commands.armCommands.manualArmControl.armUp;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
 
@@ -38,7 +42,7 @@ public class Autos extends SequentialCommandGroup {
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(new Translation2d(1.5, 0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(3, 0, new Rotation2d(0)),
+            new Pose2d(2.9, 0, new Rotation2d(0)),
             config);
 
     var thetaController =
@@ -62,8 +66,11 @@ public class Autos extends SequentialCommandGroup {
 
     addCommands(    
         new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
+        new moveUpPoint(m_arm).withTimeout(1),
         new theReverseScorer(m_arm).withTimeout(1),
         new scorerStop(m_arm).withTimeout(.1),
+        new moveDownPoint(m_arm).withTimeout(1.5),
+        new armStop(m_arm).withTimeout(.1),
         swerveControllerCommand);
         //new theScorer(m_arm);
   }
