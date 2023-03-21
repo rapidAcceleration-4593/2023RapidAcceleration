@@ -64,7 +64,7 @@ public class RobotContainer {
     driver.a().whileTrue(new moveDownPoint(m_arm));
     driver.a().whileFalse(new armStop(m_arm));
     
-    driver.y().whileTrue(new armUp(m_arm));
+    driver.y().whileTrue(new moveUpPoint(m_arm));
     driver.y().whileFalse(new armStop(m_arm));
 
     // driver.b().whileTrue(new armVisionCombo(m_Vision));
@@ -124,9 +124,9 @@ public class RobotContainer {
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
-   */
+   */ 
   public Command getAutonomousCommand() {
-    // return m_autonChooser.getSelected();
-    return new Autos(m_swerve, m_arm);
+    //return m_autonChooser.getSelected();
+    return new Autos(m_swerve, m_arm, "plzGod");
   }
 }
