@@ -58,6 +58,14 @@ public class arm extends SubsystemBase {
       //m_baseMotor.setSpeed(.66);
     }
 
+    public void lightsOn (){
+      m_relay.set(Relay.Value.kReverse);
+    }
+
+    public void lightsOff (){
+      m_relay.set(Relay.Value.kForward);
+    }
+
     public void baseRotateRight (){
       //m_baseMotor.setSpeed(-.66);
 
@@ -80,12 +88,12 @@ public class arm extends SubsystemBase {
 
     public void extesionOut() {
       m_extensionMotor.set(Constants.ArmConstants.armExtensionSpeed);
-      m_relay.set(Relay.Value.kReverse);
+      //m_relay.set(Relay.Value.kReverse);
     }
 
     public void extesionIn() {
       m_extensionMotor.set(-Constants.ArmConstants.armExtensionSpeed);
-      m_relay.set(Relay.Value.kReverse);
+      //m_relay.set(Relay.Value.kReverse);
     }
 
     public void stopArm(){
@@ -143,26 +151,26 @@ public class arm extends SubsystemBase {
 
     public void theScorer(){
      m_scorer.set(1);
-     m_relay.set(Relay.Value.kReverse);
+     //m_relay.set(Relay.Value.kReverse);
     }
 
     public void theReverseScorer(){
       m_scorer.set(-1);
-      m_relay.set(Relay.Value.kReverse);
+      //m_relay.set(Relay.Value.kReverse);
     }
 
     public void scorerStop(){
       m_scorer.set(0);
-      m_relay.set(Relay.Value.kForward);
+      //m_relay.set(Relay.Value.kForward);
     }
 
     public void wristUp(){
       m_wrist.set(.5);
-      m_relay.set(Relay.Value.kReverse);
+      //m_relay.set(Relay.Value.kReverse);
     }
     public void wristDown(){
       m_wrist.set(-.5);
-      m_relay.set(Relay.Value.kReverse);
+      //m_relay.set(Relay.Value.kReverse);
     }
     public void wristStop(){
       m_wrist.set(0);
