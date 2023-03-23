@@ -47,7 +47,7 @@ public class Autos extends SequentialCommandGroup {
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(new Translation2d(1.5, 0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(2.9, 0, new Rotation2d(0)),
+            new Pose2d(2.55, 0, new Rotation2d(0)),
             config);
 
     var thetaController =
@@ -71,11 +71,11 @@ public class Autos extends SequentialCommandGroup {
     Trajectory plzTurn =
         TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
-            new Pose2d(2.9, 0, new Rotation2d(0)),
+            new Pose2d(2.55, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(2.8, 0)),
+            List.of(new Translation2d(2.4, 0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(2.9, 0, new Rotation2d(.1)),
+            new Pose2d(2.55, 0, new Rotation2d(.1)),
             config);
 
     SwerveControllerCommand turnPlz =
@@ -88,6 +88,29 @@ public class Autos extends SequentialCommandGroup {
             thetaController,
             s_Swerve::setModuleStates,
             s_Swerve);
+
+
+    Trajectory farDriveTrajectory =
+        TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(1.5, 0)),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(4, 0, new Rotation2d(0)),
+        config);
+
+        SwerveControllerCommand farDriveCommand =
+        new SwerveControllerCommand(
+            farDriveTrajectory,
+            s_Swerve::getPose,
+            Constants.SwerveConstants.swerveKinematics,
+            new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+            new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+            thetaController,
+            s_Swerve::setModuleStates,
+            s_Swerve);
+
 
     if(autoSelector == "noMove") {
         addCommands(    
@@ -107,6 +130,25 @@ public class Autos extends SequentialCommandGroup {
         new armStop(m_arm).withTimeout(.25),
         new moveDownPoint(m_arm).withTimeout(1.75),
         new armStop(m_arm).withTimeout(.1));
+    }
+    else if (autoSelector == "driveFar") {
+    addCommands(
+        new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
+        new moveUpPoint(m_arm).withTimeout(1),
+        new armExtensionIn(m_arm).withTimeout(1),
+        new armStop(m_arm).withTimeout(.5),
+        new wristDown(m_arm).withTimeout(.5),
+        new wristStop(m_arm).withTimeout(.5),
+        new theReverseScorer(m_arm).withTimeout(1),
+        new scorerStop(m_arm).withTimeout(.5),
+        new armExtensionOut(m_arm).withTimeout(1),
+        new armStop(m_arm).withTimeout(.5),
+        new wristUp(m_arm).withTimeout(.5),
+        new wristStop(m_arm).withTimeout(.5),
+        new armStop(m_arm).withTimeout(.5),
+        new moveDownPoint(m_arm).withTimeout(1.75),
+        new armStop(m_arm).withTimeout(.1),
+        farDriveCommand);
     }
     else {      
     addCommands(    
