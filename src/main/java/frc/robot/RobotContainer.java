@@ -129,8 +129,8 @@ public class RobotContainer {
     // uncomment the return for the auto that you want to run
     // DO NOT HAVE MULTIPLE LINES UNCOMMENTED, IT WILL BREAK
 
-    return new Autos(m_swerve, m_arm, "plzGod"); // balance auto
+    // return new Autos(m_swerve, m_arm, "plzGod"); // balance auto
     // return new Autos(m_swerve, m_arm, "noMove"); // no move
-    // return new Autos(m_swerve, m_arm, "driveFar"); // drive farther
+    return new Autos(m_swerve, m_arm, "driveFar"); // drive farther
   }
 }
