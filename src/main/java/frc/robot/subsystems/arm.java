@@ -131,14 +131,14 @@ public class arm extends SubsystemBase {
     public void moveDownPoint() {
  
 
-      if (m_armPotentiometer.get() > 69){
+      if (m_armPotentiometer.get() > 57){
         m_armRotaionMotor.setSpeed(.4);
         m_armMotorP2.setSpeed(.4);
 
         
         
       }
-      else if (m_armPotentiometer.get() < 69){
+      else if (m_armPotentiometer.get() < 57){
         m_armRotaionMotor.setSpeed(0);
         m_armMotorP2.setSpeed(0);
       }
