@@ -22,8 +22,6 @@ import frc.robot.commands.armCommands.theScorer;
 import frc.robot.commands.armCommands.wristDown;
 import frc.robot.commands.armCommands.wristStop;
 import frc.robot.commands.armCommands.wristUp;
-import frc.robot.commands.armCommands.manualArmControl.armBaseRotateLeft;
-import frc.robot.commands.armCommands.manualArmControl.armBaseRotateRight;
 import frc.robot.commands.armCommands.manualArmControl.armDown;
 import frc.robot.commands.armCommands.manualArmControl.armUp;
 import frc.robot.subsystems.Swerve;
@@ -72,12 +70,6 @@ public class RobotContainer {
 
     // driver.b().whileTrue(new align(m_Vision));
     // driver.b().whileFalse(new armStop(m_arm))
-
-    driver.leftBumper().whileTrue(new armBaseRotateLeft(m_arm));
-    driver.leftBumper().whileFalse(new armStop(m_arm));
-
-    driver.rightBumper().whileTrue(new armBaseRotateRight(m_arm));
-    driver.rightBumper().whileFalse(new armStop(m_arm));
 
     auxDriver.rightBumper().whileTrue(new theScorer(m_arm));
     auxDriver.rightBumper().whileFalse(new scorerStop(m_arm));

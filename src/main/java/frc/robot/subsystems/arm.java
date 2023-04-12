@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.armCommands.manualArmControl.armUp;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class arm extends SubsystemBase {
 
@@ -34,6 +35,7 @@ public class arm extends SubsystemBase {
     private SparkMaxPIDController m_ArmExtenPidController;
     private CANSparkMax m_motorTest;
 
+    private Encoder m_wristEncoder;
 
     //double armPotVal = m_armPotentiometer.get();
 
@@ -52,11 +54,9 @@ public class arm extends SubsystemBase {
       m_extensionMotor = new CANSparkMax(14, MotorType.kBrushless);
 
       m_relay = new Relay(0);
-    } 
 
-    public void baseRotateLeft () {
-      //m_baseMotor.setSpeed(.66);
-    }
+      m_wristEncoder = new Encoder(0,1);
+    } 
 
     public void lightsOn (){
       m_relay.set(Relay.Value.kReverse);
@@ -64,12 +64,6 @@ public class arm extends SubsystemBase {
 
     public void lightsOff (){
       m_relay.set(Relay.Value.kForward);
-    }
-
-    public void baseRotateRight (){
-      //m_baseMotor.setSpeed(-.66);
-
-      //System.out.println("Base Potentiometer" + m_basePotentiometer.get());
     }
 
     public void armRotateUp () {
@@ -176,11 +170,20 @@ public class arm extends SubsystemBase {
       m_wrist.set(0);
     }
 
+    // encoder stuff
+
+    public double encoderAngle() {
+      double encoderAngle = m_wristEncoder.getDistance();
+
+      return encoderAngle;
+    }
+
     public void periodic(){
 
 
      // SmartDashboard.putNumber("Base pot ", m_basePotentiometer.get());
       SmartDashboard.putNumber("Arm Pot ", m_armPotentiometer.get());
+      SmartDashboard.putNumber("Encoder Angle", m_wristEncoder.getDistance());
 
       //System.out.println("Arm Potentiometer" + m_armPotentiometer.get());
   }
