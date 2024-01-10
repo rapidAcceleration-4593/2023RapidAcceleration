@@ -1,3 +1,7 @@
+/*
+ * Constants, update appropriately. 
+ */
+
 package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;

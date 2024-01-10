@@ -1,3 +1,12 @@
+/*
+ * Incredibly janky way to to autos. 
+ * good luck!!!!!
+ * Contains swerve trajectories, and a list of commands to schedule.
+ * At auto, these are then put on the scheduler and executed in order fom the "addCommands" call.
+ * There *has* to be a better way to do this, but this is how we did it last year. 
+ * (better way to layout, and better trajectory generation (ie path planning (pathweaver))
+ */
+
 package frc.robot.auton;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -8,7 +17,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -20,12 +28,9 @@ import frc.robot.commands.armCommands.moveDownPoint;
 import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.commands.armCommands.scorerStop;
 import frc.robot.commands.armCommands.theReverseScorer;
-import frc.robot.commands.armCommands.theScorer;
 import frc.robot.commands.armCommands.wristDown;
 import frc.robot.commands.armCommands.wristStop;
 import frc.robot.commands.armCommands.wristUp;
-import frc.robot.commands.armCommands.manualArmControl.armDown;
-import frc.robot.commands.armCommands.manualArmControl.armUp;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
 

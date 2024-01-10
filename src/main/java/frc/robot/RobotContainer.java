@@ -1,19 +1,21 @@
+/*
+ * This file contains instantiation of subsystem classes, and sets up button bindings to commands.
+ * 
+ */
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.auton.Autos;
 import frc.robot.commands.TeleopSwerve;
-//import frc.robot.commands.armCommands.align;
 import frc.robot.commands.armCommands.armExtensionIn;
 import frc.robot.commands.armCommands.armExtensionOut;
 import frc.robot.commands.armCommands.armStop;
-import frc.robot.commands.armCommands.armVisionCombo;
 import frc.robot.commands.armCommands.moveDownPoint;
 import frc.robot.commands.armCommands.moveUpPoint;
 import frc.robot.commands.armCommands.scorerStop;
@@ -22,8 +24,6 @@ import frc.robot.commands.armCommands.theScorer;
 import frc.robot.commands.armCommands.wristDown;
 import frc.robot.commands.armCommands.wristStop;
 import frc.robot.commands.armCommands.wristUp;
-import frc.robot.commands.armCommands.manualArmControl.armDown;
-import frc.robot.commands.armCommands.manualArmControl.armUp;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.arm;
 import frc.robot.subsystems.vision;
@@ -59,6 +59,8 @@ public class RobotContainer {
     /* Driver Buttons */
     driver.x().onTrue(new InstantCommand(() -> m_swerve.zeroGyro()));
 
+    // button bindings are done by creating a new command
+    // this places the new command instance on the scheduler. 
     driver.a().whileTrue(new moveDownPoint(m_arm));
     driver.a().whileFalse(new armStop(m_arm));
     

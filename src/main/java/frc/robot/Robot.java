@@ -1,3 +1,14 @@
+/**
+ * In this file, you can set behaviors when the robot goes through init/shutdown of teleop and auton.
+ * But overall, you shouldn't have to do much here. 
+ * For example, this turns on lights when teleop is enabled, and makes sure the arm was stopped when auton was disabled.
+ * Should only potentially add to the Init() or Exit() functions.
+ * 
+ * These are function overrides (see the @override annotation, and this page if you're curious about it: 
+ * https://www.geeksforgeeks.org/overriding-in-java/)
+ */
+
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -96,7 +107,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousExit() {
+  public void autonomousExit() { 
     m_robotContainer.m_arm.scorerStop();
   }
 
@@ -109,7 +120,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.m_arm.lightsOn();
+    m_robotContainer.m_arm.lightsOn(); // besides this line, can init stuff when you start teleop
   }
 
   /** This function is called periodically during operator control. */
